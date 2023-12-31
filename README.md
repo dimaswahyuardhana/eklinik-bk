@@ -1,3 +1,9 @@
 # Poliklinik
 
-# Login Admin : vian == 123456 || admin == admin
+# Login Admin
+username : admin
+password : admin
+
+# Login Dokter
+nip : 10122001
+password : dimas
