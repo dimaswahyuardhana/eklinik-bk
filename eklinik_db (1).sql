@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2024 at 01:03 PM
+-- Generation Time: Jan 05, 2024 at 01:16 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -49,7 +49,10 @@ INSERT INTO `daftar_poli` (`id`, `id_pasien`, `id_jadwal`, `keluhan`, `no_antria
 (9, 5, 3, 'Mata ', 2, '2023-12-31 08:19:57'),
 (10, 6, 3, 'Mata bengkak', 3, '2023-12-31 13:08:39'),
 (11, 7, 5, 'gigi ngilu', 2, '2024-01-04 15:57:15'),
-(12, 8, 3, 'Mata kunang-kunang', 4, '2024-01-05 11:56:49');
+(12, 8, 3, 'Mata kunang-kunang', 4, '2024-01-05 11:56:49'),
+(13, 5, 7, 'Mata sebelah terasa sempit', 1, '2024-01-05 12:08:42'),
+(14, 5, 3, 'Mata kanan terasa berat', 5, '2024-01-05 12:09:04'),
+(15, 7, 3, 'Mata kanan bengkak ', 6, '2024-01-05 12:09:55');
 
 -- --------------------------------------------------------
 
@@ -171,7 +174,8 @@ INSERT INTO `pasien` (`id`, `nama`, `alamat`, `no_ktp`, `no_hp`, `no_rm`) VALUES
 (5, 'Agung', 'Demak', '020202', '089767897879', '202312-002'),
 (6, 'Didin', 'Pati', '030303', '089767897879', '202312-003'),
 (7, 'Aan', 'Pati', '040404', '087564675789', '202312-004'),
-(8, 'Della Risqi ', 'Jepara', '15112002', '087678567787', '202401-001');
+(8, 'Della Risqi ', 'Jepara', '15112002', '087678567787', '202401-001'),
+(9, 'Fahri Alfian', 'Demak', '050505', '089765678765', '202401-002');
 
 -- --------------------------------------------------------
 
@@ -315,7 +319,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `daftar_poli`
 --
 ALTER TABLE `daftar_poli`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `detail_periksa`
@@ -345,7 +349,7 @@ ALTER TABLE `obat`
 -- AUTO_INCREMENT for table `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `periksa`
