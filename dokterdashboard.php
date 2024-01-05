@@ -107,7 +107,7 @@ include_once("koneksi.php");
                             <i class="material-icons">developer_board</i>
                             Periksa
                         </a>
-                        <a class="mdl-navigation__link" href="dokterdashboard.php?page=periksa">
+                        <a class="mdl-navigation__link" href="dokterdashboard.php?page=riwayatPasien">
                             <i class="material-icons" role="presentation">person</i>
                             Riwayat Pasien
                         </a>
@@ -124,90 +124,29 @@ include_once("koneksi.php");
 
             <div class="mdl-grid mdl-cell mdl-cell--9-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone mdl-cell--top">
                 <h2>
-                    <?php
-                    if (isset($_GET['page'])) {
-                        echo ucwords($_GET['page']);
-                    } else {
-                        echo "Dashboard";
-                    }
-                    ?>
+                <?php
+                                if (isset($_GET['page'])) {
+                                    echo ucwords($_GET['page']);
+                                } else {
+                                    echo "Dashboard";
+                                }
+                                ?>
                 </h2>
             </div>
             <main class="mdl-layout__content ">
 
-        <div class="mdl-grid ui-tables">
-
-            <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone">
-                <div class="mdl-card mdl-shadow--2dp">
-                    <div class="mdl-card__title">
-                        <h1 class="mdl-card__title-text">Data Pasien Saya</h1>
-                    </div>
-                    <div class="mdl-card__supporting-text no-padding">
-                        <table class="mdl-data-table mdl-js-data-table">
-                            <thead>
-                                <tr>
-                                    <th class="mdl-data-table__cell--non-numeric">No</th>
-                                    <th class="mdl-data-table__cell--non-numeric">Nama Pasien</th>
-                                    <th class="mdl-data-table__cell--non-numeric">No. Antrian</th>
-                                    <th class="mdl-data-table__cell--non-numeric">KeluhanRD</th>
-                                    <th class="mdl-data-table__cell--non-numeric">Hari</th>
-                                    <th class="mdl-data-table__cell--non-numeric">WaktuP</th>
-                                    <th class="mdl-data-table__cell--non-numeric">Aksi</th>
-                            </thead>
-                            <tbody>
-                            <?php
-                                    $id_dokter = $_SESSION['id'];
-                                    $result = mysqli_query($mysqli, "
-                                    SELECT daftar_poli.*, pasien.nama AS nama, jadwal_periksa.hari, jadwal_periksa.jam_mulai, jadwal_periksa.jam_selesai
-                                    FROM daftar_poli
-                                    JOIN (
-                                        SELECT id_pasien, MAX(tanggal) as max_tanggal
-                                        FROM daftar_poli
-                                        GROUP BY id_pasien
-                                    ) as latest_poli ON daftar_poli.id_pasien = latest_poli.id_pasien AND daftar_poli.tanggal = latest_poli.max_tanggal
-                                    JOIN jadwal_periksa ON daftar_poli.id_jadwal = jadwal_periksa.id 
-                                    JOIN pasien ON daftar_poli.id_pasien = pasien.id
-                                    LEFT JOIN periksa ON daftar_poli.id = periksa.id_daftar_poli
-                                    WHERE jadwal_periksa.id_dokter = '$id_dokter' AND periksa.id_daftar_poli IS NULL
-                                    ");
-                                    $no = 1;
-                                    while ($data = mysqli_fetch_array($result)) :
-                                    ?>
-                                <tr>
-                                    <td><?php echo $no++ ?></td>
-                                    <td><?php echo $data['nama'] ?></td>
-                                    <td><?php echo $data['no_antrian'] ?></td>
-                                    <td><?php echo $data['keluhan'] ?></td>
-                                    <td><?php echo $data['hari'] ?></td>
-                                    <td><?php echo $data['jam_mulai'] . " - " . $data['jam_selesai'] ?></td>
-                                    <td>
-                                            <li class="mdl-list__item">
-                                                <a href="dokterdashboard.php?periksa=obat&id=<?php echo $data['id'] ?>">
-                                                    <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-teal">
-                                                        <i class="material-icons">visibility</i>
-                                                    </button>
-                                                </a>
-                                                <a href="dokterdashboard.php?periksa=obat&id=<?php echo $data['id'] ?>&aksi=hapus">
-                                                    <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-orange">
-                                                        <i class="material-icons">edit</i>
-                                                    </button>
-                                                </a>
-                                            </li>
-                                        
-                                    </td>
-                                </tr>
-                                <?php endwhile; ?>
-                            </tbody>
-                        </table>
-                    </div>
+        
+            <main role="main" class="container">
+                <div class="container-fluid">
+                    <?php
+                    if (isset($_GET['page'])) {
+                        include($_GET['page'] . ".php");
+                    } else {
+                        echo "<h2>Welcome, Doctor</h2>";
+                    }
+                    ?>
                 </div>
-            </div>
-
-        </div>
-    </main>
-        </div>
-
-    </main>
+            </main>
 
 </div>
 

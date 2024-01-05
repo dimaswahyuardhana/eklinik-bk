@@ -13,7 +13,6 @@ if (isset($_GET['aksi'])) {
               </script>";
 }
 ?>
-<main class="mdl-layout__content ">
 
 <div class="mdl-grid ui-tables">
 
@@ -69,4 +68,3 @@ if (isset($_GET['aksi'])) {
     </div>
 
 </div>
-</main>

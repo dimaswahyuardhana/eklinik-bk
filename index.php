@@ -28,7 +28,7 @@ include_once("koneksi.php");
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="index.php">Home</a>
+                        <a class="nav-link" aria-current="page" href="index.php?page=home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="index.php?page=pasienbaru">Pasien Baru</a>
@@ -89,25 +89,31 @@ include_once("koneksi.php");
             </div>
         </div>
     </nav>
-    
-
-    <main role="main" class="container">
+    <div>
         <?php
-
         if (isset($_GET['page'])) {
             include($_GET['page'] . ".php");
         } else {
-            echo "<br><h2>Selamat Datang di Ardhana Hospital";
-
             if (isset($_SESSION['username'])) {
-                //jika sudah login tampilkan username
-                echo ", " . $_SESSION['username'] . "</h2><hr>";
+                // jika sudah login, tampilkan username
+                echo " " . $_SESSION['username'] . "";
             } else {
-                echo "</h2><hr>Daftar poli mudah, ya hanya di Ardhana Hospital</hr></h2>";
+                // jika tidak ada request, arahkan ke halaman home.php
+                include("home.php");
             }
         }
         ?>
-    </main>
+    </div>
+    <br>
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="alert alert-info" role="alert">
+                <center>
+                    &copy; 2024 Ardhana Hospital. All rights reserved.
+                </center>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

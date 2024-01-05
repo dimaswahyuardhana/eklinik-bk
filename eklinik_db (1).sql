@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 31, 2023 at 09:08 AM
+-- Generation Time: Jan 05, 2024 at 01:03 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -44,7 +44,12 @@ INSERT INTO `daftar_poli` (`id`, `id_pasien`, `id_jadwal`, `keluhan`, `no_antria
 (4, 4, 3, 'Mata saya ada dua', 1, '2023-12-31 07:31:36'),
 (5, 5, 4, 'Kulit saya kurang putih', 1, '2023-12-31 07:32:39'),
 (6, 6, 5, 'Gigi saya pengen dikawat ', 1, '2023-12-31 07:33:52'),
-(7, 7, 6, 'Tulang saya pengen dipijit', 1, '2023-12-31 07:34:54');
+(7, 7, 6, 'Tulang saya pengen dipijit', 1, '2023-12-31 07:34:54'),
+(8, 4, 4, 'Kulit berjerawat', 2, '2023-12-31 08:16:29'),
+(9, 5, 3, 'Mata ', 2, '2023-12-31 08:19:57'),
+(10, 6, 3, 'Mata bengkak', 3, '2023-12-31 13:08:39'),
+(11, 7, 5, 'gigi ngilu', 2, '2024-01-04 15:57:15'),
+(12, 8, 3, 'Mata kunang-kunang', 4, '2024-01-05 11:56:49');
 
 -- --------------------------------------------------------
 
@@ -57,6 +62,17 @@ CREATE TABLE `detail_periksa` (
   `id_periksa` int(11) UNSIGNED NOT NULL,
   `id_obat` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_periksa`
+--
+
+INSERT INTO `detail_periksa` (`id`, `id_periksa`, `id_obat`) VALUES
+(2, 2, 10),
+(3, 3, 12),
+(4, 4, 12),
+(5, 5, 12),
+(6, 6, 11);
 
 -- --------------------------------------------------------
 
@@ -106,7 +122,8 @@ INSERT INTO `jadwal_periksa` (`id`, `id_dokter`, `hari`, `jam_mulai`, `jam_seles
 (3, 18, 'Senin', '09:00:00', '11:00:00'),
 (4, 19, 'Selasa', '10:00:00', '12:00:00'),
 (5, 20, 'Rabu', '11:00:00', '13:00:00'),
-(6, 21, 'Kamis', '13:00:00', '15:00:00');
+(6, 21, 'Kamis', '13:00:00', '15:00:00'),
+(7, 18, 'Jumat', '13:00:00', '15:00:00');
 
 -- --------------------------------------------------------
 
@@ -153,7 +170,8 @@ INSERT INTO `pasien` (`id`, `nama`, `alamat`, `no_ktp`, `no_hp`, `no_rm`) VALUES
 (4, 'Mayong', 'Brebes', '010101', '089765678765', '202312-001'),
 (5, 'Agung', 'Demak', '020202', '089767897879', '202312-002'),
 (6, 'Didin', 'Pati', '030303', '089767897879', '202312-003'),
-(7, 'Aan', 'Pati', '040404', '087564675789', '202312-004');
+(7, 'Aan', 'Pati', '040404', '087564675789', '202312-004'),
+(8, 'Della Risqi ', 'Jepara', '15112002', '087678567787', '202401-001');
 
 -- --------------------------------------------------------
 
@@ -168,6 +186,18 @@ CREATE TABLE `periksa` (
   `catatan` text NOT NULL,
   `biaya_periksa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `periksa`
+--
+
+INSERT INTO `periksa` (`id`, `id_daftar_poli`, `tgl_periksa`, `catatan`, `biaya_periksa`) VALUES
+(1, 10, '2024-01-04 15:42:02', 'jangan makan telat', 150000),
+(2, 10, '2024-01-04 15:42:11', 'jangan makan telat', 155000),
+(3, 9, '2024-01-04 16:37:31', 'makan mulu ', 157000),
+(4, 8, '2024-01-04 16:52:05', 'Harus sering mandi ', 157000),
+(5, 7, '2024-01-04 16:53:54', 'jangan banyak atraksi ', 157000),
+(6, 12, '2024-01-05 12:57:53', 'ditetes', 152000);
 
 -- --------------------------------------------------------
 
@@ -285,13 +315,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `daftar_poli`
 --
 ALTER TABLE `daftar_poli`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `detail_periksa`
 --
 ALTER TABLE `detail_periksa`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `dokter`
@@ -303,7 +333,7 @@ ALTER TABLE `dokter`
 -- AUTO_INCREMENT for table `jadwal_periksa`
 --
 ALTER TABLE `jadwal_periksa`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `obat`
@@ -315,13 +345,13 @@ ALTER TABLE `obat`
 -- AUTO_INCREMENT for table `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `periksa`
 --
 ALTER TABLE `periksa`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `poli`

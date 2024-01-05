@@ -127,10 +127,6 @@ include_once("koneksi.php");
                             <i class="material-icons">multiline_chart</i>
                             Jadwal Periksa
                         </a>
-                        <a class="mdl-navigation__link" href="dashboard.php?page=coba">
-                            <i class="material-icons">multiline_chart</i>
-                            Rawat Jalan
-                        </a>
                     </nav>
                 </div>
             </div>

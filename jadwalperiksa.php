@@ -118,13 +118,11 @@ if (isset($_GET['aksi'])) {
                                 <option value="Sabtu">Sabtu</option>
                             </select>
                             </div>
-                            <div class="mdl-textfield mdl-js-textfield full-size">
+                            <div class="mdl-textfield mdl-js-textfield full-size">Jam Mulai
                                 <input class="mdl-textfield__input" type="time" id="inputHarga" name="jam_mulai" value="<?php echo $jam_mulai ?>">
-                                <label class="mdl-textfield__label" for="inputHarga">JAM MULAI</label>
                             </div>
-                            <div class="mdl-textfield mdl-js-textfield full-size">
+                            <div class="mdl-textfield mdl-js-textfield full-size">Jam Selesai
                                 <input class="mdl-textfield__input" type="time" id="inputHarga" name="jam_selesai" value="<?php echo $jam_selesai ?>">
-                                <label class="mdl-textfield__label" for="inputHarga">JAM SELESAI</label>
                             </div>
                             <li class="mdl-list__item">
                                 <button type="submit" name="simpan" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue">

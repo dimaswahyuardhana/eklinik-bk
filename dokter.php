@@ -51,89 +51,83 @@ if (isset($_GET['aksi'])) {
               </script>";
 }
 ?>
-<main class="mdl-layout__content ui-form-components">
+    <div class="mdl-grid mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-cell--top">
 
-<div class="mdl-grid mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone mdl-cell--top">
-
-    <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--7-col-tablet mdl-cell--4-col-phone">
-        <div class="mdl-card mdl-shadow--2dp">
-            <div class="mdl-card__title">
-                <h5 class="mdl-card__title-text text-color--white">Tambah Data Dokter</h5>
-            </div>
-            <div class="mdl-card__supporting-text">
-                <form class="form form--basic" method="POST" action="" name="myForm" onsubmit="return(validate());">
-                <?php
-                $nama = '';
-                $alamat = '';
-                $no_hp = '';
-                $id_poli = '';
-                $nip = '';
-                $password = '';
-                if (isset($_GET['id'])) {
-                    $ambil = mysqli_query($mysqli, "SELECT * FROM dokter WHERE id='" . $_GET['id'] . "'");
-                    while ($row = mysqli_fetch_array($ambil)) {
-                        $nama = $row['nama'];
-                        $alamat = $row['alamat'];
-                        $no_hp = $row['no_hp'];
-                        $id_poli = $row['id_poli'];
-                        $nip = $row['nip'];
-                        $password = $row['password'];
-                    }
-                ?>
-                <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
-                <?php
-                    }
-                ?>
-                    <div class="mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone form__article">
-                            <div class="mdl-textfield mdl-js-textfield full-size">
-                                <input class="mdl-textfield__input" type="text" id="inputNama" name="nama"  value="<?php echo $nama ?>">
-                                <label class="mdl-textfield__label" for="inputNama">NAMA DOKTER</label>
+        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone">
+            <div class="mdl-card mdl-shadow--2dp">
+                <div class="mdl-card__title">
+                    <h5 class="mdl-card__title-text text-color--white">Tambah Data Dokter</h5>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <form class="form form--basic" method="POST" action="" name="myForm" onsubmit="return(validate());">
+                    <?php
+                    $nama = '';
+                    $alamat = '';
+                    $no_hp = '';
+                    $id_poli = '';
+                    $nip = '';
+                    $password = '';
+                    if (isset($_GET['id'])) {
+                        $ambil = mysqli_query($mysqli, "SELECT * FROM dokter WHERE id='" . $_GET['id'] . "'");
+                        while ($row = mysqli_fetch_array($ambil)) {
+                            $nama = $row['nama'];
+                            $alamat = $row['alamat'];
+                            $no_hp = $row['no_hp'];
+                            $id_poli = $row['id_poli'];
+                            $nip = $row['nip'];
+                            $password = $row['password'];
+                        }
+                    ?>
+                    <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
+                    <?php
+                        }
+                    ?>
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone form__article">
+                                <div class="mdl-textfield mdl-js-textfield full-size">
+                                    <input class="mdl-textfield__input" type="text" id="inputNama" name="nama"  value="<?php echo $nama ?>">
+                                    <label class="mdl-textfield__label" for="inputNama">NAMA DOKTER</label>
+                                </div>
+                                <div class="mdl-textfield mdl-js-textfield full-size">
+                                    <input class="mdl-textfield__input" type="text" id="inputAlamat" name="alamat" value="<?php echo $alamat ?>">
+                                    <label class="mdl-textfield__label" for="inputAlamat">ALAMAT</label>
+                                </div>
+                                <div class="mdl-textfield mdl-js-textfield full-size">
+                                    <input class="mdl-textfield__input" type="number" id="inputNohp" name="no_hp" value="<?php echo $no_hp ?>">
+                                    <label class="mdl-textfield__label" for="inputNohp">NOMOR HP</label>
+                                </div>
+                                <div class="mdl-textfield mdl-js-textfield full-size">
+                                    <select class="form-select" id="inputPoli" name="id_poli" aria-label="Default select example">
+                                        <option selected>-- PILIH POLI --</option>
+                                        <?php
+                                            $poli_result = mysqli_query($mysqli, "SELECT * FROM poli");
+                                            while ($poli_data = mysqli_fetch_array($poli_result)) {
+                                                $selected = ($poli_data['id'] == $id_poli) ? 'selected' : '';
+                                                echo "<option value='" . $poli_data['id'] . "' $selected>" . $poli_data['nama_poli'] . "</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="mdl-textfield mdl-js-textfield full-size">
+                                    <input class="mdl-textfield__input" type="text" id="inputNip" name="nip" value="<?php echo $nip ?>">
+                                    <label class="mdl-textfield__label" for="inputNip">NIP</label>
+                                </div>
+                                <div class="mdl-textfield mdl-js-textfield full-size">
+                                    <input class="mdl-textfield__input" type="password" id="inputPassword" name="password" value="<?php echo $password ?>">
+                                    <label class="mdl-textfield__label" for="inputPassword">Password</label>
+                                </div>
+                                <li class="mdl-list__item">
+                                    <button type="submit" name="simpan" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue">
+                                        Simpan
+                                    </button>
+                                </li>
                             </div>
-                            <div class="mdl-textfield mdl-js-textfield full-size">
-                                <input class="mdl-textfield__input" type="text" id="inputAlamat" name="alamat" value="<?php echo $alamat ?>">
-                                <label class="mdl-textfield__label" for="inputAlamat">ALAMAT</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield full-size">
-                                <input class="mdl-textfield__input" type="number" id="inputNohp" name="no_hp" value="<?php echo $no_hp ?>">
-                                <label class="mdl-textfield__label" for="inputNohp">NOMOR HP</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield full-size">
-                                <select class="form-select" id="inputPoli" name="id_poli" aria-label="Default select example">
-                                    <option selected>-- PILIH POLI --</option>
-                                    <?php
-                                        $poli_result = mysqli_query($mysqli, "SELECT * FROM poli");
-                                        while ($poli_data = mysqli_fetch_array($poli_result)) {
-                                            $selected = ($poli_data['id'] == $id_poli) ? 'selected' : '';
-                                            echo "<option value='" . $poli_data['id'] . "' $selected>" . $poli_data['nama_poli'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield full-size">
-                                <input class="mdl-textfield__input" type="text" id="inputNip" name="nip" value="<?php echo $nip ?>">
-                                <label class="mdl-textfield__label" for="inputNip">NIP</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield full-size">
-                                <input class="mdl-textfield__input" type="password" id="inputPassword" name="password" value="<?php echo $password ?>">
-                                <label class="mdl-textfield__label" for="inputPassword">Password</label>
-                            </div>
-                            <li class="mdl-list__item">
-                                <button type="submit" name="simpan" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue">
-                                    Simpan
-                                </button>
-                            </li>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-</main>
-
-<main class="mdl-layout__content ">
 
     <div class="mdl-grid ui-tables">
 
@@ -193,4 +187,3 @@ if (isset($_GET['aksi'])) {
         </div>
 
     </div>
-</main>
