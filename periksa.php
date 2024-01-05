@@ -83,19 +83,19 @@ if (isset($_POST['simpanData'])) {
                             <div class="mdl-textfield mdl-js-textfield full-size">
                                 <input style="color:black;" type="hidden" name="id_dokter" value="<?php echo $id_dokter; ?>">
                             </div>
-                            <div class="mdl-textfield mdl-js-textfield full-size">
+                            <div class="mdl-textfield mdl-js-textfield full-size">Nomor Antrian
                                 <input style="color:black;" disabled type="text" name="no_antrian" class="form-control" required value="<?php echo $no_antrian ?>">
                                 
                             </div>
-                            <div class="mdl-textfield mdl-js-textfield full-size">
+                            <div class="mdl-textfield mdl-js-textfield full-size">Nama Pasien
                                 <input style="color:black;" disabled type="text" name="id_pasien" class="form-control" required value="<?php echo $nama_pasien ?>">
                                 
                             </div>
-                            <div class="mdl-textfield mdl-js-textfield full-size">
+                            <div class="mdl-textfield mdl-js-textfield full-size">Nama Dokter
                                 <input disabled style="color:black;" type="text" name="id_dokter" class="form-control" required value="<?php echo $nama_dokter ?>">
                                 
                             </div>
-                            <div class="mdl-textfield mdl-js-textfield full-size">
+                            <div class="mdl-textfield mdl-js-textfield full-size">Catatan Dokter
                                 <input style="color:black;" type="text" name="catatan" class="form-control" required value="<?php echo $catatan ?>">
                                 <label class="mdl-textfield__label" for="inputCatatan"></label>
                             </div>
@@ -131,7 +131,7 @@ if (isset($_POST['simpanData'])) {
             <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone">
                 <div class="mdl-card mdl-shadow--2dp">
                     <div class="mdl-card__title">
-                        <h1 class="mdl-card__title-text">Tabel Obat</h1>
+                        <h1 class="mdl-card__title-text">Tabel Data Periksa</h1>
                     </div>
                     <div class="mdl-card__supporting-text no-padding">
                         <table class="mdl-data-table mdl-js-data-table">
