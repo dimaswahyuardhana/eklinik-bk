@@ -42,7 +42,6 @@ include_once("koneksi.php");
     <link rel="stylesheet" href="css/lib/nv.d3.min.css">
     <link rel="stylesheet" href="css/application.min.css">
     <!-- endinject -->
-
 </head>
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header is-small-screen">
@@ -101,7 +100,11 @@ include_once("koneksi.php");
                     <nav class="mdl-navigation">
                         <a class="mdl-navigation__link mdl-navigation__link--current" href="dokterdashboard.php">
                             <i class="material-icons" role="presentation">dashboard</i>
-                            Pendaftaran Pasien
+                            Dashboard
+                        </a>
+                        <a class="mdl-navigation__link" href="dokterdashboard.php?page=jadwalperiksa">
+                            <i class="material-icons" role="presentation">dashboard</i>
+                            Jadwal Periksa
                         </a>
                         <a class="mdl-navigation__link" href="dokterdashboard.php?page=periksa">
                             <i class="material-icons">developer_board</i>

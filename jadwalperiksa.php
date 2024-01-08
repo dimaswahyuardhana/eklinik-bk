@@ -1,64 +1,79 @@
-<?php
-if (!isset($_SESSION)) {
-    session_start();
-}
-if (!isset($_SESSION['username'])) {
-    // Jika pengguna sudah login, tampilkan tombol "Logout"
-    header("Location: dashboard.php?page=loginUser");
-    exit;
-}
-
-if (isset($_POST['simpan'])) {
-    $id_dokter = $_POST['id_dokter'];
-    $hari = $_POST['hari'];
-    $jam_mulai = $_POST['jam_mulai'];
-    $jam_selesai = $_POST['jam_selesai'];
-
-    if (isset($_POST['id'])) {
-        $id = $_POST['id'];
-        $sql = "UPDATE jadwal_periksa SET id_dokter='$id_dokter', hari='$hari', jam_mulai='$jam_mulai', jam_selesai='$jam_selesai' WHERE id = '" . $_POST['id'] . "'";
-        $edit = mysqli_query($mysqli, $sql);
-
-        echo "
-                <script> 
-                    alert('Berhasil mengubah data.');
-                    document.location='dashboard.php?page=jadwalperiksa';
-                </script>
-            ";
-    } else {
-        $sql = "INSERT INTO jadwal_periksa (id_dokter, hari, jam_mulai, jam_selesai) VALUES ('$id_dokter', '$hari', '$jam_mulai', '$jam_selesai')";
-        $tambah = mysqli_query($mysqli, $sql);
-
-        echo "
-                <script> 
-                    alert('Berhasil menambah data.');
-                    document.location='dashboard.php?page=jadwalperiksa';
-                </script>
-            ";
+<?php 
+    if (!isset($_SESSION)) {
+        session_start();
     }
-}
+    if (!isset($_SESSION['nip'])) {
+        // Jika pengguna sudah login, tampilkan tombol "Logout"
+        header("Location: dokterdashboard.php?page=loginDokter");
+        exit;
+    }
 
-if (isset($_GET['aksi'])) {
-    if ($_GET['aksi'] == 'hapus') {
-        $hapus = mysqli_query($mysqli, "DELETE FROM pasien WHERE id = '" . $_GET['id'] . "'");
+    if (isset($_POST['simpan'])) {
+        $id_dokter = $_SESSION['id'];
+        $hari = $_POST['hari'];
+        $jam_mulai = $_POST['jam_mulai'];
+        $jam_selesai = $_POST['jam_selesai'];
 
-        if ($hapus) {
-            echo "
+        if (isset($_POST['id'])) {
+            $id = $_POST['id'];
+            $stmt = $mysqli->prepare("UPDATE jadwal_periksa SET id_dokter=?, hari=?, jam_mulai=?, jam_selesai=? WHERE id=?");
+            $stmt->bind_param("isssi", $id_dokter, $hari, $jam_mulai, $jam_selesai, $id);
+
+            if ($stmt->execute()) {
+                echo "
                     <script> 
-                        alert('Berhasil menghapus data.');
-                        document.location='dashboard.php?page=jadwalperiksa';
+                        alert('Berhasil mengubah data.');
+                        document.location='dokterdashboard.php?page=jadwalperiksa';
                     </script>
                 ";
+            } else {
+                // Handle error
+            }
+
+            $stmt->close();
         } else {
-            echo "
+            $stmt = $mysqli->prepare("INSERT INTO jadwal_periksa (id_dokter, hari, jam_mulai, jam_selesai) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("isss", $id_dokter, $hari, $jam_mulai, $jam_selesai);
+
+            if ($stmt->execute()) {
+                echo "
                     <script> 
-                        alert('Gagal menghapus data: " . mysqli_error($mysqli) . "');
-                        document.location='dashboard.php?page=jadwalperiksa';
+                        alert('Berhasil menambah data.');
+                        document.location='dokterdashboard.php?page=jadwalperiksa';
                     </script>
                 ";
+            } else {
+                // Handle error
+            }
+
+            $stmt->close();
         }
     }
-}
+
+    if (isset($_GET['aksi'])) {
+        if ($_GET['aksi'] == 'hapus') {
+            $stmt = $mysqli->prepare("DELETE FROM jadwal_periksa WHERE id = ?");
+            $stmt->bind_param("i", $_GET['id']);
+
+            if ($stmt->execute()) {
+                echo "
+                    <script> 
+                        alert('Berhasil menghapus data.');
+                        document.location='dokterdashboard.php?page=jadwalperiksa';
+                    </script>
+                ";
+            } else {
+                echo "
+                    <script> 
+                        alert('Gagal menghapus data: " . mysqli_error($mysqli) . "');
+                        document.location='dokterdashboard.php?page=jadwalperiksa';
+                    </script>
+                ";
+            }
+
+            $stmt->close();
+        }
+    }
 ?>
 <main class="mdl-layout__content ui-form-components">
 
@@ -70,8 +85,8 @@ if (isset($_GET['aksi'])) {
                 <h5 class="mdl-card__title-text text-color--white">Tambah Data Jadwal Periksa</h5>
             </div>
             <div class="mdl-card__supporting-text">
-                <form class="form form--basic" method="POST" action="" name="myForm" onsubmit="return(validate());">
-                <?php
+                <form action="" method="POST" onsubmit="return(validate());">
+                    <?php
                     $id_dokter = '';
                     $hari = '';
                     $jam_mulai = '';
@@ -92,18 +107,20 @@ if (isset($_GET['aksi'])) {
                     ?>
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone form__article">
-                            <div class="mdl-textfield mdl-js-textfield full-size">
+                        <div class="mdl-textfield mdl-js-textfield full-size">
                             <label for="id_dokter">Dokter <span class="text-danger">*</span></label>
-                            <select class="form-select" name="id_dokter" aria-label="id_dokter">
+                            <select disabled class="form-select" name="id_dokter" aria-label="id_dokter">
                                 <option value="" selected>Pilih Dokter...</option>
                                 <?php
-                                $result = mysqli_query($mysqli, "SELECT * FROM dokter");
+                                    $id_dokter = $_SESSION['id'];
 
-                                while ($data = mysqli_fetch_assoc($result)) {
-                                    echo "<option value='" . $data['id'] . "'>" . $data['nama'] . "</option>";
-                                }
+                                    $result = mysqli_query($mysqli, "SELECT * FROM dokter WHERE id");
+
+                                    while($data = mysqli_fetch_assoc($result)) {
+                                        $selected = ($data['id'] == $id_dokter) ? 'selected' : ''; // If the doctor id matches the session id, mark it as selected
+                                        echo "<option $selected value='" . $data['id'] . "'>" . $data['nama'] . "</option>";
+                                    }
                                 ?>
-
                             </select>
                             </div>
                             <div class="mdl-textfield mdl-js-textfield full-size">
@@ -156,7 +173,12 @@ if (isset($_GET['aksi'])) {
                             </thead>
                             <tbody>
                             <?php
-                            $result = mysqli_query($mysqli, "SELECT dokter.nama, jadwal_periksa.id, jadwal_periksa.hari, jadwal_periksa.jam_mulai, jadwal_periksa.jam_selesai FROM dokter JOIN jadwal_periksa ON dokter.id = jadwal_periksa.id_dokter");
+                            $id_dokter = $_SESSION['id'];
+
+                            $result = mysqli_query($mysqli, "SELECT dokter.nama, jadwal_periksa.id, jadwal_periksa.hari, jadwal_periksa.jam_mulai, jadwal_periksa.jam_selesai 
+                            FROM dokter 
+                            JOIN jadwal_periksa ON dokter.id = jadwal_periksa.id_dokter 
+                            WHERE dokter.id = $id_dokter");
                             $no = 1;
                             while ($data = mysqli_fetch_array($result)) :
                             ?>
@@ -168,12 +190,12 @@ if (isset($_GET['aksi'])) {
                                     <td><?php echo $data['jam_selesai'] ?> WIB</td>
                                     <td>
                                             <li class="mdl-list__item">
-                                                <a href="dashboard.php?page=jadwalperiksa&id=<?php echo $data['id'] ?>">
+                                                <a href="dokterdashboard.php?page=jadwalperiksa&id=<?php echo $data['id'] ?>">
                                                     <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-orange">
                                                         <i class="material-icons">edit</i>
                                                     </button>
                                                 </a>
-                                                <a href="dashboard.php?page=jadwalperiksa&id=<?php echo $data['id'] ?>&aksi=hapus"">
+                                                <a href="dokterdashboard.php?page=jadwalperiksa&id=<?php echo $data['id'] ?>&aksi=hapus">
                                                     <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-red">
                                                         <i class="material-icons">delete</i>
                                                     </button>
